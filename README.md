@@ -17,7 +17,7 @@ A template `docker-compose.yml`, and standalone usage commands are provided.
 - `docker compose`, or `docker-compose` (optional, but recommended)
 
 ### Download repository
-Clone this repository
+Clone this repository (or just grab the docker-compose.yml).
 
 ```git clone https://github.com/Atinoda/cuda_memtest-docker```
 
@@ -30,35 +30,46 @@ Note that the version number should have the full-stop removed, i.e., Compute ve
 
 # Docker Compose
 
-docker-compose is the recommended and easiest way to build and run this image:
+docker-compose is the recommended and easiest way to run this image:
 
-- Edit `docker-compose.yml` build arg `DCMAKE_CUDA_ARCHITECTURES` to match your card.
-- Build: `docker-compose build`
+## Run
+
 - Run: `docker-compose up`
 - Destroy: `docker-compose down -v`
 - *Optional: specify custom test arguments by editing `command:` in `docker-compose.yml`*
+
+
+## Build locally
+If you need a different version of CUDA you can build the image locally:
+
+- Uncomment the build directives in `docker-compose.yml`
+- Comment out the `image: ` mapping in `docker-compose.yml`
+- Edit the `docker-compose.yml` build arg `DCMAKE_CUDA_ARCHITECTURES` to match your card.
+- Build: `docker-compose build`
 
 ---
 
 # Standalone Container
 
-### Build
-Go the repository directory and issue the build command:
 
-```docker build --build-arg DCMAKE_CUDA_ARCHITECTURES="YOUR_CUDA_VERSION_CODE" -t cuda_memtest:local .```
-
-This will create a local image tagged as `cuda_memtest:local`
 
 ### Run the container
 
 Run (then destroy) a container for this image:
 
-```docker run -it --rm --gpus all cuda_memtest:local```
+```docker run -it --rm --gpus all atinoda/cuda_memtest:latest```
 
 Run with a custom command (e.g., `--stress`):
 
-```docker run -it --rm --gpus all cuda_memtest:local --stress```
+```docker run -it --rm --gpus all atinoda/cuda_memtest:latest --stress```
 
 Press `ctrl+c` to exit the test early.
+
+### Build locally
+Go to the repository directory and issue the build command:
+
+```docker build --build-arg DCMAKE_CUDA_ARCHITECTURES="YOUR_CUDA_VERSION_CODE" -t cuda_memtest:local .```
+
+This will create a local image tagged as `cuda_memtest:local`
 
 

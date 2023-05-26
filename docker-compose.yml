@@ -1,11 +1,11 @@
 version: "3"
 services:
   cuda_memtest:
-    build:
-      context: .
-      args:
-        # See: https://developer.nvidia.com/cuda-gpus
-        - DCMAKE_CUDA_ARCHITECTURES="86"
+    image: atinoda/cuda_memtest:latest
+#    build:
+#      context: .
+#      args:
+#        - DCMAKE_CUDA_ARCHITECTURES="86"
     container_name: cuda_memtest-docker
     # Specify a custom command as `command: arg1 arg2 arg3`
 #    command: --stress
